@@ -1,6 +1,4 @@
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,8 +8,8 @@ public class SeleniumTesting {
 
     private static WebDriver driver;
 
-    @BeforeAll
-    static void init() {
+    @BeforeEach
+    void init() {
         // Create a new instance of the Firefox driver
         // Notice that the remainder of the code relies on the interface,
         // not the implementation.
@@ -32,6 +30,7 @@ public class SeleniumTesting {
         int size = driver.findElements(By.xpath("//*[@id=\"tbodycars\"]/tr")).size();
         int expected = 5;
         Assertions.assertEquals(expected, size);
+        driver.quit();
     }
 
     // Thread sleep 3 seconds to load the DOM
@@ -46,6 +45,7 @@ public class SeleniumTesting {
         int size = driver.findElements(By.xpath("//*[@id=\"tbodycars\"]/tr")).size();
         int expected = 2;
         Assertions.assertEquals(expected, size);
+        driver.quit();
     }
 
     @Test
@@ -67,6 +67,7 @@ public class SeleniumTesting {
         int oldSize = driver.findElements(By.xpath("//*[@id=\"tbodycars\"]/tr")).size();
         int oldExpected = 5;
         Assertions.assertEquals(oldExpected, oldSize);
+        driver.quit();
     }
 
     @Test
@@ -81,6 +82,7 @@ public class SeleniumTesting {
 
         Assertions.assertEquals("938", sortOne.getText());
         Assertions.assertEquals("940", sortTwo.getText());
+        driver.quit();
     }
 
     @Test
@@ -102,6 +104,7 @@ public class SeleniumTesting {
         WebElement carElementDescription = driver.findElement(By.xpath("//*[@id=\"tbodycars\"]/tr[1]/td[6]"));
         String expected = "Cool Car";
         Assertions.assertEquals(expected, carElementDescription.getText());
+        driver.quit();
     }
 
     @Test
@@ -121,10 +124,12 @@ public class SeleniumTesting {
         int size = driver.findElements(By.xpath("//*[@id=\"tbodycars\"]/tr")).size();
         int expected = 5;
         Assertions.assertEquals(expected, size);
+        driver.quit();
     }
 
     @Test
-    void testCreationOfNewCar() throws InterruptedException {
+    @AfterAll
+    static void testCreationOfNewCar() throws InterruptedException {
         Thread.sleep(2000);
         WebElement yearNew = driver.findElement(By.xpath("//*[@id=\"year\"]"));
         WebElement registeredNew = driver.findElement(By.xpath("//*[@id=\"registered\"]"));
@@ -150,5 +155,6 @@ public class SeleniumTesting {
         int size = driver.findElements(By.xpath("//*[@id=\"tbodycars\"]/tr")).size();
         int expected = 6;
         Assertions.assertEquals(expected, size);
+        driver.quit();
     }
 }
